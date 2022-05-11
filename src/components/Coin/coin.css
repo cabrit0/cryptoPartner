@@ -1,0 +1,36 @@
+.coin {
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 25px 0;
+  padding: 0 40px;
+  text-align: center;
+}
+
+.coin > h2,
+.coin > h3,
+.coin > img {
+  width: 80px;
+}
+
+.coin > h3 {
+  font-size: 0.7rem;
+}
+
+.coin > .priceC {
+  width: 10px;
+}
+
+.coin > img {
+  width: 40px;
+  height: 40px;
+}
+
+.good{
+    color: #2a9d8f;
+}
+
+.bad{
+    color: #e76f51;
+}
