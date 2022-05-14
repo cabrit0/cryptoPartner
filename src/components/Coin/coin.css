@@ -2,8 +2,8 @@
   font-size: 0.75rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin: 25px 0;
+  justify-content: space-around;
+  margin: 0;
   padding: 0 40px;
   text-align: center;
 }
@@ -12,6 +12,15 @@
 .coin > h3,
 .coin > img {
   width: 80px;
+  margin: 4px auto;
+  margin-left: 10px;
+  text-align: center;
+}
+
+.coin > button{
+  margin-left: 10px;
+  border: none;
+  cursor: pointer;
 }
 
 .coin > h3 {
@@ -27,10 +36,10 @@
   height: 40px;
 }
 
-.good{
-    color: #2a9d8f;
+.good {
+  color: #2a9d8f;
 }
 
-.bad{
-    color: #e76f51;
+.bad {
+  color: #e76f51;
 }

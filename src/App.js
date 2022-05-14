@@ -2,19 +2,22 @@ import Axios from "axios";
 import React from "react";
 import Head from "./components/Head/Head";
 import Coins from "./components/Coins/Coins";
-import './App.css'
+import "./App.css";
 
 function App() {
   const [listOfCoins, setListOfCoins] = React.useState([]);
   //const [filteredCoins, setFilteredCoins] = React.useState(listOfCoins);
   const [searchWord, setSearchWord] = React.useState("");
 
-  React.useEffect(() => {
-    Axios.get("https://api.coinstats.app/public/v1/coins?skip=0").then(
-      (response) => {
-        setListOfCoins(response.data.coins);
-      }
+  const getData = async () => {
+    const res = await Axios.get(
+      "https://api.coinstats.app/public/v1/coins?skip=0"
     );
+    setListOfCoins(res.data.coins)
+  };
+
+  React.useEffect(() => {
+    getData();
   }, []);
 
   const filteredCoins = listOfCoins.filter((coin) => {

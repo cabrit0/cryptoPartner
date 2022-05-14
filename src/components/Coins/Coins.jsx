@@ -1,6 +1,6 @@
 import React from "react";
 import Coin from "../Coin/Coin";
-import './coins.css'
+import "./coins.css";
 
 function Coins(props) {
   //console.log(props.items);
