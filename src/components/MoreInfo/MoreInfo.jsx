@@ -1,6 +1,7 @@
 import React from "react";
 import { FaTwitter, FaGlobeAmericas } from "react-icons/fa";
 import "./moreInfo.css";
+import "../../App.css";
 
 export default function MoreInfo(props) {
   console.log(props);
@@ -8,12 +9,12 @@ export default function MoreInfo(props) {
     <div className="overlay">
       <div className="modal">
         <div className="title">
-          <img src={props.icon} alt={props.name} />
+          <img className="icon" src={props.icon} alt={props.name} />
           <h1>{props.name}!</h1>
           <div className="price">Price: {props.price} $</div>
-        </div>
-        <div className="symbol">
-          <h3>- {props.symbol} -</h3>
+          <div className="symbol">
+            <h3>- {props.symbol} -</h3>
+          </div>
         </div>
         <div className="average">
           <div className="hour">
