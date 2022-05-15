@@ -1,0 +1,25 @@
+.slider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.coin-slider {
+  margin: 0 75px;
+}
+
+.coin-slider img {
+  width: 75px;
+  height: 75px;
+}
+
+.arrow-left {
+  font-size: 2rem;
+  color: #e76f51;
+}
+.arrow-right {
+  font-size: 2rem;
+  color: #2a9d8f;
+}
