@@ -39,7 +39,7 @@ export default function MoreInfo(props) {
         <div className="supply">
           <h4>Supply</h4>
           <p>Available: {props.availableSup}</p>
-          <p>Total: {props.totalSup !== 0 ? "Unknown" : props.totalSup}</p>
+          <p>Total: {props.totalSup !== 0 ? props.totalSup : "Unknown" }</p>
         </div>
 
         <div className="social-media">
