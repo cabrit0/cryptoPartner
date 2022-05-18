@@ -8,7 +8,7 @@ import "./App.css";
 function App() {
   const [listOfCoins, setListOfCoins] = React.useState([]);
   const [searchWord, setSearchWord] = React.useState("");
-  const [randomCoin, setRandomCoin] = React.useState({});
+  const [randomCoin, setRandomCoin] = React.useState();
 
   const getData = async () => {
     const res = await Axios.get(
@@ -59,12 +59,12 @@ function App() {
     }, 2500);
   });
 
-  let rCoin = getRandomItem(listOfCoins)
+  //let rCoin = getRandomItem(listOfCoins)
 
   return (
     <div className="App">
       <Head name="searchInput" searchHandler={searchHandler} />
-      {filteredCoins.length === 100 && <Slider coin={rCoin} />}
+      {filteredCoins.length === 100 && <Slider coin={randomCoin} />}
       <Coins items={filteredCoins} /> {/* filteredCoins */}
     </div>
   );
