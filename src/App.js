@@ -8,7 +8,7 @@ import "./App.css";
 function App() {
   const [listOfCoins, setListOfCoins] = React.useState([]);
   const [searchWord, setSearchWord] = React.useState("");
-  //const [randomCoin, setRandomCoin] = React.useState({});
+  const [randomCoin, setRandomCoin] = React.useState({});
 
   const getData = async () => {
     const res = await Axios.get(
@@ -53,11 +53,11 @@ function App() {
     return item;
   }
 
-/*   React.useEffect(() => {
-    setInterval(() => {
+  React.useEffect(() => {
+    setTimeout(() => {
       setRandomCoin(getRandomItem(listOfCoins));
     }, 2500);
-  }); */
+  });
 
   let rCoin = getRandomItem(listOfCoins)
 
