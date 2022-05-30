@@ -54,9 +54,13 @@ function App() {
   }
 
   React.useEffect(() => {
-    setTimeout(() => {
+    let timer = setTimeout(() => {
       setRandomCoin(getRandomItem(listOfCoins));
     }, 2500);
+
+    return () => {
+      clearTimeout(timer)
+    }
   });
 
   //let rCoin = getRandomItem(listOfCoins)
@@ -64,7 +68,7 @@ function App() {
   return (
     <div className="App">
       <Head name="searchInput" searchHandler={searchHandler} />
-      {filteredCoins.length === 100 && <Slider coin={randomCoin} />}
+      {filteredCoins.length === 100 && <Slider className="slider" coin={randomCoin} />}
       <Coins items={filteredCoins} /> {/* filteredCoins */}
     </div>
   );
