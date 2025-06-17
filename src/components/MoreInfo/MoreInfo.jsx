@@ -43,12 +43,16 @@ export default function MoreInfo(props) {
         </div>
 
         <div className="social-media">
-          <a href={props.twitter} className="twitter">
-            <FaTwitter /> Twitter
-          </a>
-          <a href={props.website} className="website">
-            <FaGlobeAmericas /> Website
-          </a>
+          {props.twitter && (
+            <a href={props.twitter} className="twitter" target="_blank" rel="noopener noreferrer">
+              <FaTwitter /> Twitter
+            </a>
+          )}
+          {props.website && (
+            <a href={props.website} className="website" target="_blank" rel="noopener noreferrer">
+              <FaGlobeAmericas /> Website
+            </a>
+          )}
         </div>
         <div className="info">
           <div className="price-changes"></div>

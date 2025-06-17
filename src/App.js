@@ -15,13 +15,27 @@ function App() {
   const getData = async () => {
     try {
       const res = await Axios.get(
-        "https://api.coinstats.app/public/v1/coins?skip=0"
+        'https://api.coingecko.com/api/v3/coins/markets',
+        {
+          params: {
+            vs_currency: 'usd',
+            order: 'market_cap_desc',
+            per_page: 100,
+            page: 1,
+            sparkline: false,
+            price_change_percentage: '1h,24h,7d'
+          }
+        }
       );
-      setListOfCoins(res.data.coins);
+      setListOfCoins(res.data); // CoinGecko API returns an array directly
       setError(null); // Clear any previous errors
     } catch (err) {
       console.error("Error fetching data: ", err);
-      setError("Failed to load cryptocurrency data. Please check your connection or try again later.");
+      // Attempt to get more specific error message if available
+      const errorMessage = err.response && err.response.data && err.response.data.error
+        ? `Failed to load cryptocurrency data: ${err.response.data.error}`
+        : "Failed to load cryptocurrency data. Please check your connection or try again later.";
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -32,7 +46,8 @@ function App() {
   }, []);
 
   const filteredCoins = listOfCoins.filter((coin) => {
-    return coin.name.toLowerCase().includes(searchWord.toLowerCase());
+    // Ensure coin and coin.name are not null before calling toLowerCase()
+    return coin && coin.name && coin.name.toLowerCase().includes(searchWord.toLowerCase());
   });
 
   function searchHandler(event) {
@@ -57,6 +72,10 @@ function App() {
   } */
 
   function getRandomItem(arr) {
+    // Ensure arr is not empty and is an array
+    if (!Array.isArray(arr) || arr.length === 0) {
+      return null;
+    }
     const randomIndex = Math.floor(Math.random() * arr.length);
     const item = arr[randomIndex];
 
@@ -64,14 +83,17 @@ function App() {
   }
 
   React.useEffect(() => {
-    let timer = setTimeout(() => {
-      setRandomCoin(getRandomItem(listOfCoins));
-    }, 2500);
+    // Ensure listOfCoins is populated before setting a random coin
+    if (listOfCoins && listOfCoins.length > 0) {
+      let timer = setTimeout(() => {
+        setRandomCoin(getRandomItem(listOfCoins));
+      }, 2500);
 
-    return () => {
-      clearTimeout(timer)
+      return () => {
+        clearTimeout(timer);
+      };
     }
-  });
+  }, [listOfCoins]); // Add listOfCoins as a dependency
 
   //let rCoin = getRandomItem(listOfCoins)
 
@@ -86,7 +108,8 @@ function App() {
       ) : (
         <>
           <Head name="searchInput" searchHandler={searchHandler} />
-          {filteredCoins.length === 100 && !searchWord && <Slider className="slider" coin={randomCoin} />} {/* Show slider only if not searching */}
+          {/* Update condition for Slider: check if randomCoin is set and searchWord is empty */}
+          {randomCoin && !searchWord && listOfCoins.length > 0 && <Slider className="slider" coin={randomCoin} />}
           {
             !isLoading && !error && filteredCoins.length === 0 && searchWord !== "" ? (
               <div className="no-results-message">
