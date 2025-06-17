@@ -12,9 +12,20 @@ function App() {
 
   const getData = async () => {
     const res = await Axios.get(
-      "https://api.coinstats.app/public/v1/coins?skip=0"
+      "https://openapi.coinstats.app/public/v1/coins"  // Using new base URL, old path
     );
-    setListOfCoins(res.data.coins);
+    let coinsData = [];
+    if (res.data && Array.isArray(res.data.coins)) {
+      coinsData = res.data.coins;
+    } else if (res.data && Array.isArray(res.data.result)) {
+      coinsData = res.data.result;
+    } else if (res.data && Array.isArray(res.data)) {
+      coinsData = res.data;
+    }
+    // It's also possible the actual coin data is nested deeper, e.g., res.data.data.coins
+    // or that the response is not an array directly but an object with a property containing the array.
+    // This implementation only covers the requested cases.
+    setListOfCoins(coinsData);
   };
 
   React.useEffect(() => {
