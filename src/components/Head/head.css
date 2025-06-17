@@ -13,15 +13,33 @@
   letter-spacing: 0.8px;
 }
 
-.Head > input {
-  padding: 10px;
+.search-container {
+  position: relative;
+  display: flex; /* To align icon and input */
+  align-items: center;
+  width: auto; /* Or a specific width if desired */
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px; /* Adjust as needed for padding inside the input */
+  color: #e76f51; /* Match border color or another suitable color */
+  font-size: 1rem; /* Adjust size */
+  z-index: 1; /* Ensure icon is above the input field */
+}
+
+/* Styles for the input field within the search container */
+.search-container input {
+  padding: 10px 10px 10px 35px; /* Top, Right, Bottom, Left (increased left for icon) */
   border-radius: 8px;
   background-color: #2e383b;
   border: .8px solid #e76f51;
-  text-align: center;
+  text-align: left; /* Changed from center to align with icon */
+  width: 280px; /* Specified width */
+  color: rgb(225, 225, 225); /* Ensure text color is visible */
 }
 
-.Head > input:focus {
+.search-container input:focus {
   background-color: rgba(231, 111, 81, 0.2);
   color: white;
   font-weight: bold;

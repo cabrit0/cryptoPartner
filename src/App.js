@@ -9,12 +9,22 @@ function App() {
   const [listOfCoins, setListOfCoins] = React.useState([]);
   const [searchWord, setSearchWord] = React.useState("");
   const [randomCoin, setRandomCoin] = React.useState();
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [error, setError] = React.useState(null);
 
   const getData = async () => {
-    const res = await Axios.get(
-      "https://api.coinstats.app/public/v1/coins?skip=0"
-    );
-    setListOfCoins(res.data.coins);
+    try {
+      const res = await Axios.get(
+        "https://api.coinstats.app/public/v1/coins?skip=0"
+      );
+      setListOfCoins(res.data.coins);
+      setError(null); // Clear any previous errors
+    } catch (err) {
+      console.error("Error fetching data: ", err);
+      setError("Failed to load cryptocurrency data. Please check your connection or try again later.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   React.useEffect(() => {
@@ -67,9 +77,28 @@ function App() {
 
   return (
     <div className="App">
-      <Head name="searchInput" searchHandler={searchHandler} />
-      {filteredCoins.length === 100 && <Slider className="slider" coin={randomCoin} />}
-      <Coins items={filteredCoins} /> {/* filteredCoins */}
+      {isLoading ? (
+        <div className="loading-spinner-container">
+          <div className="loading-spinner"></div>
+        </div>
+      ) : error ? (
+        <div className="error-message">{error}</div>
+      ) : (
+        <>
+          <Head name="searchInput" searchHandler={searchHandler} />
+          {filteredCoins.length === 100 && !searchWord && <Slider className="slider" coin={randomCoin} />} {/* Show slider only if not searching */}
+          {
+            !isLoading && !error && filteredCoins.length === 0 && searchWord !== "" ? (
+              <div className="no-results-message">
+                <p>No coins found for "{searchWord}".</p>
+                <p>Please try a different search term.</p>
+              </div>
+            ) : (
+              <Coins items={filteredCoins} />
+            )
+          }
+        </>
+      )}
     </div>
   );
 }

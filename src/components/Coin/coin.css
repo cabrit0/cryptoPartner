@@ -1,45 +1,70 @@
 .coin {
-  font-size: 0.75rem;
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  margin: 0;
-  padding: 0 40px;
-  text-align: center;
+  justify-content: space-between; /* Changed from space-around */
+  padding: 15px; /* Changed from 0 40px */
+  margin: 15px auto; /* Changed from 0 */
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  width: calc(100% - 30px); /* Accounts for padding */
+  max-width: 600px;
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
 
-.coin > h2,
-.coin > h3,
-.coin > img {
-  width: 80px;
-  margin: 4px auto;
-  margin-left: 10px;
-  text-align: center;
+.coin > h2 { /* Coin Name */
+  font-size: 1.25rem; /* Increased from 0.75rem (implicit via .coin) */
+  font-weight: 600; /* Semi-bold */
+  /* width: auto; Removed fixed width: 80px; */
+  margin: 0 10px 0 0; /* Adjusted spacing, removed auto margins */
+  flex-grow: 1; /* Allow name to take available space */
+  text-align: left; /* Changed from center */
+  color: #333; /* Darker text color for better readability */
 }
 
-.coin > button{
-  margin-left: 10px;
-  border: none;
-  cursor: pointer;
-}
-
-.coin > h3 {
-  font-size: 0.7rem;
-}
-
-.coin > .priceC {
-  width: 10px;
-}
-
-.coin > img {
+.coin > img { /* Coin Icon */
   width: 40px;
   height: 40px;
+  margin-right: 15px; /* Adjusted spacing */
+  /* margin-left: 0; Removed margin-left: 10px; */
+  /* margin: 0; Removed margin: 4px auto; */
 }
 
+.coin > h3 { /* Price, Price Changes - general styling */
+  font-size: 0.9rem; /* Increased from 0.7rem */
+  /* width: auto; Removed fixed width: 80px; */
+  margin: 0 5px; /* Standardized margins */
+  min-width: 70px; /* Provide minimum space */
+  text-align: right; /* Align numerical data to the right */
+  color: #555; /* Slightly lighter text color for secondary info */
+}
+
+.coin > h3.color { /* Specific style for current price if needed, or remove if covered by .coin > h3 */
+  /* Example: if you want the price to be a different color or weight */
+  font-weight: 500;
+  color: #000;
+}
+
+
+.coin > button {
+  margin-left: 15px; /* Adjusted margin */
+  border: none;
+  cursor: pointer;
+  background: transparent; /* Ensure button background is transparent */
+  color: #007bff; /* Example icon color */
+  padding: 5px;
+}
+
+.coin > button:hover {
+  color: #0056b3; /* Darker on hover */
+}
+
+/* .good and .bad classes are fine for coloring price changes */
 .good {
-  color: #2a9d8f;
+  color: #2a9d8f !important; /* Ensure specificity, keep existing green */
 }
 
 .bad {
-  color: #e76f51;
+  color: #e76f51 !important; /* Ensure specificity, keep existing red */
 }
