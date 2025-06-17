@@ -28,7 +28,12 @@ function Coin({
       <h2> {name}</h2>
       <img src={icon} alt={name} />
       <h3 className="color"> Price: {price.toFixed(2)}</h3>
-      <h3 className={priceChange1h > 0 ? "good" : "bad"}> {priceChange1h} </h3>
+      <h3 className={priceChange1h > 0 ? "good" : "bad"}>
+        1h: {priceChange1h > 0 ? "▲" : "▼"} {priceChange1h.toFixed(2)}%
+      </h3>
+      <h3 className={priceChange1d > 0 ? "good" : "bad"}>
+        24h: {priceChange1d > 0 ? "▲" : "▼"} {priceChange1d.toFixed(2)}%
+      </h3>
       {showInfo ? null : (
         <button onClick={toggle}>
           <FaInfo />
