@@ -13,16 +13,14 @@ function Coins(props) {
           <Coin
             key={coin.id}
             name={coin.name}
-            icon={coin.icon}
-            price={coin.price}
-            priceChange1d={coin.priceChange1d}
-            priceChange1h={coin.priceChange1h}
-            priceChange1w={coin.priceChange1w}
+            icon={coin.image}
+            price={coin.current_price}
+            priceChange1d={coin.price_change_percentage_24h}
+            priceChange1h={coin.price_change_percentage_1h_in_currency}
+            priceChange1w={coin.price_change_percentage_7d_in_currency}
             symbol={coin.symbol}
-            availableSupply={coin.availableSupply}
-            totalSupply={coin.totalSupply}
-            twitterUrl={coin.twitterUrl}
-            websiteUrl={coin.websiteUrl}
+            availableSupply={coin.circulating_supply}
+            totalSupply={coin.total_supply}
           />
         );
       })}
