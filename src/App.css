@@ -41,3 +41,65 @@
     opacity: 1;
   }
 }
+
+.loading {
+  text-align: center;
+  margin: 30px 0;
+  font-size: 1.2rem;
+  color: #2a9d8f;
+}
+
+.error {
+  text-align: center;
+  margin: 30px 0;
+  font-size: 1.1rem;
+  color: #e76f51;
+}
+
+.scroll-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: #2a9d8f;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 999;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  transition: background 0.2s;
+}
+
+.scroll-to-top:hover {
+  background: #e76f51;
+}
+
+[data-theme="light"] {
+  background-color: #f5f5f5;
+}
+[data-theme="light"] * {
+  color: #222 !important;
+  background-color: #f5f5f5 !important;
+}
+[data-theme="light"] .App {
+  background-color: #f5f5f5 !important;
+}
+[data-theme="light"] .Head > h1 {
+  color: #2a9d8f !important;
+}
+[data-theme="light"] .loading {
+  color: #2a9d8f !important;
+}
+[data-theme="light"] .error {
+  color: #e76f51 !important;
+}
+[data-theme="light"] .scroll-to-top {
+  background: #e76f51 !important;
+  color: white !important;
+}
+[data-theme="light"] .scroll-to-top:hover {
+  background: #2a9d8f !important;
+}

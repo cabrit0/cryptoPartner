@@ -9,17 +9,52 @@ function App() {
   const [listOfCoins, setListOfCoins] = React.useState([]);
   const [searchWord, setSearchWord] = React.useState("");
   const [randomCoin, setRandomCoin] = React.useState();
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState(null);
+  const [lastUpdate, setLastUpdate] = React.useState(null);
+  const [showScroll, setShowScroll] = React.useState(false);
+  const [theme, setTheme] = React.useState(() => localStorage.getItem('theme') || 'dark');
 
   const getData = async () => {
-    const res = await Axios.get(
-      "https://api.coinstats.app/public/v1/coins?skip=0"
-    );
-    setListOfCoins(res.data.coins);
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await Axios.get(
+        "https://api.coingecko.com/api/v3/coins/markets",
+        {
+          params: {
+            vs_currency: "usd",
+            order: "market_cap_desc",
+            per_page: 100,
+            page: 1,
+            sparkline: false,
+          },
+        }
+      );
+      setListOfCoins(res.data);
+      setLastUpdate(new Date());
+    } catch (err) {
+      setError("Erro ao carregar dados das moedas. Tente novamente mais tarde.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   React.useEffect(() => {
     getData();
   }, []);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setShowScroll(window.scrollY > 200);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const filteredCoins = listOfCoins.filter((coin) => {
     return coin.name.toLowerCase().includes(searchWord.toLowerCase());
@@ -65,11 +100,33 @@ function App() {
 
   //let rCoin = getRandomItem(listOfCoins)
 
+  React.useEffect(() => {
+    document.body.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+  };
+
   return (
     <div className="App">
+      <button onClick={toggleTheme} style={{position: 'fixed', top: 20, right: 20, zIndex: 1000, background: '#2a9d8f', color: 'white', border: 'none', borderRadius: 8, padding: '8px 16px', cursor: 'pointer'}}>
+        {theme === 'dark' ? '🌙 Dark' : '☀️ Light'}
+      </button>
       <Head name="searchInput" searchHandler={searchHandler} />
-      {filteredCoins.length === 100 && <Slider className="slider" coin={randomCoin} />}
-      <Coins items={filteredCoins} /> {/* filteredCoins */}
+      {lastUpdate && !loading && !error && (
+        <div style={{textAlign: 'center', fontSize: '0.9rem', color: '#aaa', marginBottom: 10}}>
+          Última atualização: {lastUpdate.toLocaleString()}
+        </div>
+      )}
+      {loading && <div className="loading">Carregando moedas...</div>}
+      {error && <div className="error">{error}</div>}
+      {!loading && !error && filteredCoins.length === 100 && <Slider className="slider" coin={randomCoin} />}
+      {!loading && !error && <Coins items={filteredCoins} />}
+      {showScroll && (
+        <button className="scroll-to-top" onClick={scrollToTop} title="Voltar ao topo">↑</button>
+      )}
     </div>
   );
 }
